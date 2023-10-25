@@ -11,7 +11,7 @@ import java.io.Serializable;
 @TableName(value = "pants")
 public class Pants implements Serializable{
     @TableId
-    private long id;
+    private Integer id;
 
     @TableField(exist = false)
     private Clothing clothing;
