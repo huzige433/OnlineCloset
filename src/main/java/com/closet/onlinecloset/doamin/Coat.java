@@ -1,4 +1,5 @@
 package com.closet.onlinecloset.doamin;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -10,7 +11,7 @@ import java.io.Serializable;
 @Data
 @TableName(value = "coat")
 public class Coat implements Serializable{
-    @TableId
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     @TableField(exist = false)

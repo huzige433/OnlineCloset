@@ -8,6 +8,7 @@ import com.closet.onlinecloset.services.impl.ClothingServiceImpl;
 import com.closet.onlinecloset.services.impl.CoatServiceImpl;
 import com.closet.onlinecloset.services.impl.ShoeServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -30,8 +31,7 @@ public class ShoeController {
 
     @GetMapping("/list")
     public List<?> list(){
-        List<?> closets= shoeServiceImpl.selectShoeWithClothing(null);
-        return closets;
+        return shoeServiceImpl.selectShoeWithClothing(null);
     }
 
     @PostMapping("/add")
@@ -46,15 +46,21 @@ public class ShoeController {
 
 
     @GetMapping("/deleted/{id}")
-    public Boolean deleteCoat(@PathVariable long id){
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean deleteCoat(@PathVariable Integer id) throws Exception{
+        try {
         Shoe shoe=shoeServiceImpl.getById(id);
         Clothing clothing=shoe.getClothing();
         clothingServiceImpl.removeById(clothing.getId());
         return shoeServiceImpl.removeById(id);
+        }catch (Exception ex){
+            ex.printStackTrace();
+            throw  new Exception(ex);
+        }
     }
 
     @GetMapping("/page/{id}")
-    public Shoe ViewCoat(@PathVariable long id){
+    public Shoe ViewCoat(@PathVariable Integer id){
         return shoeServiceImpl.getById(id);
 
     }

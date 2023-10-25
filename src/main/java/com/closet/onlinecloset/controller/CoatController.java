@@ -6,8 +6,10 @@ import com.closet.onlinecloset.doamin.Coat;
 import com.closet.onlinecloset.services.impl.ClothingServiceImpl;
 import com.closet.onlinecloset.services.impl.CoatServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Console;
 import java.io.IOException;
 import java.util.List;
 
@@ -28,17 +30,23 @@ public class CoatController {
 
     @GetMapping("/list")
     public List<?> list(){
-        List<?> closets= coatServiceImpl.selectCoatWithClothing(null);
-        return closets;
+        return coatServiceImpl.selectCoatWithClothing(null);
     }
 
     @PostMapping("/add")
-    public Boolean add(@RequestBody Coat coat){
-        Clothing clothing=coat.getClothing();
-        clothingServiceImpl.saveOrUpdate(clothing);
-        Integer clothingId=clothing.getId();
-        coat.setClothingId(clothingId);
-        return coatServiceImpl.saveOrUpdate(coat);
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean add(@RequestBody Coat coat) throws Exception{
+        try {
+            Clothing clothing=coat.getClothing();
+            clothingServiceImpl.saveOrUpdate(clothing);
+            Integer clothingId=clothing.getId();
+            coat.setClothingId(clothingId);
+            return coatServiceImpl.saveOrUpdate(coat);
+        }catch (Exception ex){
+            ex.printStackTrace();
+            throw  new Exception(ex);
+        }
+
 
     }
 
@@ -62,7 +70,7 @@ public class CoatController {
 
 
     @GetMapping("/deleted/{id}")
-    public Boolean deleteCoat(@PathVariable long id){
+    public Boolean deleteCoat(@PathVariable Integer id){
         Coat coat=coatServiceImpl.getById(id);
         Clothing clothing=coat.getClothing();
         clothing.setType(4);
@@ -70,7 +78,7 @@ public class CoatController {
     }
 
     @GetMapping("/page/{id}")
-    public Coat ViewCoat(@PathVariable long id){
+    public Coat ViewCoat(@PathVariable Integer id){
         return coatServiceImpl.getById(id);
 
     }
