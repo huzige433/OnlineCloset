@@ -28,8 +28,8 @@ public class PantsController {
 
 
     @GetMapping("/list")
-    public List<?> list(){
-        return pantsServiceImpl.selectPantsWithClothing(null);
+    public List<?> list(@RequestHeader("userid") Integer userid){
+        return pantsServiceImpl.selectPantsWithClothing(null,userid);
     }
 
     @PostMapping("/add")

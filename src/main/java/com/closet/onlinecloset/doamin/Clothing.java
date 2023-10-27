@@ -27,6 +27,7 @@ public class Clothing implements Serializable {
     private Date buytime;//购买时间
     private Integer season;//春0夏1秋冬2
     private Integer type;//元属性type,0衣服1裤子2内衣3鞋子-1丢弃
+    private Integer userid;//用户id
 
 
 

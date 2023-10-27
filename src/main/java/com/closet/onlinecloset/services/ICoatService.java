@@ -6,5 +6,5 @@ import com.closet.onlinecloset.doamin.Coat;
 import java.util.List;
 
 public interface ICoatService extends IService<Coat> {
-     List<Coat> selectCoatWithClothing( Integer season);
+     List<Coat> selectCoatWithClothing( Integer season,Integer userid);
 }

@@ -19,7 +19,7 @@ public class PantsServiceImpl extends ServiceImpl<PantsDao, Pants> implements IP
     PantsDao pantsDao;
 
     @Override
-    public List<Pants> selectPantsWithClothing(Integer season) {
-        return pantsDao.selectPantsWithClothing(season);
+    public List<Pants> selectPantsWithClothing(Integer season,Integer userid) {
+        return pantsDao.selectPantsWithClothing(season,userid);
     }
 }

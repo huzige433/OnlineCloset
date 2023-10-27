@@ -18,7 +18,7 @@ public class CoatServiceImpl extends ServiceImpl<CoatDao, Coat> implements ICoat
     CoatDao coatDao;
 
     @Override
-    public List<Coat> selectCoatWithClothing(Integer season) {
-        return coatDao.selectCoatWithClothing(season);
+    public List<Coat> selectCoatWithClothing(Integer season,Integer userid) {
+        return coatDao.selectCoatWithClothing(season,userid);
     }
 }

@@ -26,8 +26,8 @@ public class UnderWearController {
 
 
     @GetMapping("/list")
-    public List<?> list(){
-        return underWearServiceImpl.selectUnderWearWithClothing(null);
+    public List<?> list(@RequestHeader("userid") Integer userid){
+        return underWearServiceImpl.selectUnderWearWithClothing(null,userid);
 
     }
 

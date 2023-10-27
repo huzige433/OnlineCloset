@@ -7,5 +7,5 @@ import com.closet.onlinecloset.doamin.Shoe;
 import java.util.List;
 
 public interface IShoeService extends IService<Shoe> {
-     List<Shoe> selectShoeWithClothing(Integer season);
+     List<Shoe> selectShoeWithClothing(Integer season,Integer userid);
 }

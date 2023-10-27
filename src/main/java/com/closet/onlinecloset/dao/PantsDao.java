@@ -20,12 +20,12 @@ public interface PantsDao extends BaseMapper<Pants> {
     Coat selectById(Integer id);
 
     @Select("<script>" +
-            "SELECT c.*, cl.* FROM pants c JOIN clothing cl ON c.clothing_id = cl.id AND cl.type>-1" +
+            "SELECT c.*, cl.* FROM pants c JOIN clothing cl ON c.clothing_id = cl.id AND cl.type>-1 AND cl.userid=#{userid}" +
             "<if test='season != null'> WHERE cl.season = #{season}</if>" +
             "</script>")
     @Results({
             @Result(property = "id", column = "id"),
             @Result(property = "clothing", column = "clothing_id", one = @One(select = "com.closet.onlinecloset.dao.ClothingDao.selectById"))
     })
-    List<Pants> selectPantsWithClothing(Integer season);
+    List<Pants> selectPantsWithClothing(Integer season,Integer userid);
 }

@@ -29,8 +29,8 @@ public class CoatController {
 
 
     @GetMapping("/list")
-    public List<?> list(){
-        return coatServiceImpl.selectCoatWithClothing(null);
+    public List<?> list(@RequestHeader("userid") Integer userid){
+        return coatServiceImpl.selectCoatWithClothing(null,userid);
     }
 
     @PostMapping("/add")

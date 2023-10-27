@@ -16,27 +16,28 @@ public class ClothingServiceImpl extends ServiceImpl<ClothingDao, Clothing> impl
     @Autowired
     private ClothingDao clothingMapper;
 
-    public List<?> getToSeason(Integer season){
+    public List<?> getToSeason(Integer season,Integer userid){
         QueryWrapper<Clothing> wrapper=new QueryWrapper<>();
-        wrapper.eq("season",season);
+        wrapper.eq("season",season).eq("userid",userid);
         List<?> clothing=clothingMapper.selectList(wrapper);
         return clothing;
     }
-    public List<?> getToSeason(){
+    public List<?> getToSeason(Integer userid){
         QueryWrapper<Clothing> wrapper=new QueryWrapper<>();
+        wrapper.eq("userid",userid);
         List<?> clothing=clothingMapper.selectList(wrapper);
         return clothing;
     }
-    public List<?> getToType(Integer type){
+    public List<?> getToType(Integer type,Integer userid){
         QueryWrapper<Clothing> wrapper=new QueryWrapper<>();
-        wrapper.eq("type",type);
+        wrapper.eq("type",type).eq("userid",userid);
         List<?> clothing=clothingMapper.selectList(wrapper);
         return clothing;
     }
 
-    public Integer getCountToType(Integer type){
+    public Integer getCountToType(Integer type,Integer userid){
         QueryWrapper<Clothing> wrapper=new QueryWrapper<>();
-        wrapper.eq("type",type);
+        wrapper.eq("type",type).eq("userid",userid);
         Integer count=clothingMapper.selectCount(wrapper);
         return count;
     }

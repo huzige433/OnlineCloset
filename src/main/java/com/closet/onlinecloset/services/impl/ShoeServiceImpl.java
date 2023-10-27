@@ -19,7 +19,7 @@ public class ShoeServiceImpl extends ServiceImpl<ShoeDao, Shoe> implements IShoe
     ShoeDao shoeDao;
 
     @Override
-    public List<Shoe> selectShoeWithClothing(Integer season) {
-        return shoeDao.selectShoeWithClothing(season);
+    public List<Shoe> selectShoeWithClothing(Integer season,Integer userid) {
+        return shoeDao.selectShoeWithClothing(season,userid);
     }
 }

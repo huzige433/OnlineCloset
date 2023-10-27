@@ -7,5 +7,5 @@ import com.closet.onlinecloset.doamin.Pants;
 import java.util.List;
 
 public interface IPantsService extends IService<Pants> {
-     List<Pants> selectPantsWithClothing( Integer season);
+     List<Pants> selectPantsWithClothing( Integer season,Integer userid);
 }

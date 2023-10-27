@@ -30,8 +30,8 @@ public class ShoeController {
 
 
     @GetMapping("/list")
-    public List<?> list(){
-        return shoeServiceImpl.selectShoeWithClothing(null);
+    public List<?> list(@RequestHeader("userid") Integer userid){
+        return shoeServiceImpl.selectShoeWithClothing(null,userid);
     }
 
     @PostMapping("/add")

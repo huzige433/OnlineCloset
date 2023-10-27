@@ -26,20 +26,20 @@ public class ClothingController {
 
 
     @GetMapping("/imglist/{season}")
-    public List<?> Imglist(@PathVariable Integer season){
-        List<?> closets= clothingServiceImpl.getToSeason(season);
+    public List<?> Imglist(@PathVariable Integer season,@RequestHeader("userid") Integer userid){
+        List<?> closets= clothingServiceImpl.getToSeason(season,userid);
         return closets;
     }
 
     @GetMapping("/imglist")
-    public List<?> Imglist(){
-        List<?> closets= clothingServiceImpl.getToSeason();
+    public List<?> Imglist(@RequestHeader("userid") Integer userid){
+        List<?> closets= clothingServiceImpl.getToSeason(userid);
         return closets;
     }
 
     @GetMapping("/recycle")
-    public List<?> Recycle(){
-        List<?> closets= clothingServiceImpl.getToType(-1);
+    public List<?> Recycle(@RequestHeader("userid") Integer userid){
+        List<?> closets= clothingServiceImpl.getToType(-1,userid);
         return closets;
     }
 
@@ -51,12 +51,12 @@ public class ClothingController {
     }
 
     @GetMapping("/count")
-    public Map<String, Integer> clothingCount(){
-        Integer coatcount=clothingServiceImpl.getCountToType(0);
-        Integer pantscount=clothingServiceImpl.getCountToType(1);
-        Integer underwearcount=clothingServiceImpl.getCountToType(2);
-        Integer shoecount=clothingServiceImpl.getCountToType(3);
-        Integer recycle=clothingServiceImpl.getCountToType(-1);
+    public Map<String, Integer> clothingCount(@RequestHeader("userid") Integer userid){
+        Integer coatcount=clothingServiceImpl.getCountToType(0,userid);
+        Integer pantscount=clothingServiceImpl.getCountToType(1,userid);
+        Integer underwearcount=clothingServiceImpl.getCountToType(2,userid);
+        Integer shoecount=clothingServiceImpl.getCountToType(3,userid);
+        Integer recycle=clothingServiceImpl.getCountToType(-1,userid);
         Map<String, Integer> countMap = new HashMap<>();
         countMap.put("coatcount", coatcount);
         countMap.put("pantscount", pantscount);

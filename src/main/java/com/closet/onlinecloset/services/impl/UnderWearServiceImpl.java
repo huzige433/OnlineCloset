@@ -19,7 +19,7 @@ public class UnderWearServiceImpl extends ServiceImpl<UnderWearDao, UnderWear> i
     UnderWearDao underWearDao;
 
     @Override
-    public List<UnderWear> selectUnderWearWithClothing(Integer season) {
-        return underWearDao.selectUnderWearWithClothing(season);
+    public List<UnderWear> selectUnderWearWithClothing(Integer season,Integer userid) {
+        return underWearDao.selectUnderWearWithClothing(season,userid);
     }
 }

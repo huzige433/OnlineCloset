@@ -19,12 +19,12 @@ public interface ShoeDao extends BaseMapper<Shoe> {
     Shoe selectById(Integer id);
 
     @Select("<script>" +
-            "SELECT c.*, cl.* FROM shoe c JOIN clothing cl ON c.clothing_id = cl.id AND cl.type>-1" +
+            "SELECT c.*, cl.* FROM shoe c JOIN clothing cl ON c.clothing_id = cl.id AND cl.type>-1 AND cl.userid=#{userid}" +
             "<if test='season != null'> WHERE cl.season = #{season}</if>" +
             "</script>")
     @Results({
             @Result(property = "id", column = "id"),
             @Result(property = "clothing", column = "clothing_id", one = @One(select = "com.closet.onlinecloset.dao.ClothingDao.selectById"))
     })
-    List<Shoe> selectShoeWithClothing(Integer season);
+    List<Shoe> selectShoeWithClothing(Integer season,Integer userid);
 }
