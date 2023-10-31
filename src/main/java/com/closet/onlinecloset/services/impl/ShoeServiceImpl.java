@@ -1,5 +1,6 @@
 package com.closet.onlinecloset.services.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.closet.onlinecloset.dao.CoatDao;
 import com.closet.onlinecloset.dao.ShoeDao;
@@ -21,5 +22,10 @@ public class ShoeServiceImpl extends ServiceImpl<ShoeDao, Shoe> implements IShoe
     @Override
     public List<Shoe> selectShoeWithClothing(Integer season,Integer userid) {
         return shoeDao.selectShoeWithClothing(season,userid);
+    }
+
+    @Override
+    public <T>List<Shoe> selectShoeWithClothing(QueryWrapper<T> wrapper) {
+        return shoeDao.selectShoeWithClothingbyWrapper(wrapper);
     }
 }

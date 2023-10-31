@@ -30,18 +30,20 @@ public class CoatController {
 
     @GetMapping("/list")
     public List<?> list(@RequestHeader("userid") Integer userid){
+
         return coatServiceImpl.selectCoatWithClothing(null,userid);
     }
 
     @PostMapping("/add")
     @Transactional(rollbackFor = Exception.class)
-    public Boolean add(@RequestBody Coat coat) throws Exception{
+    public Coat add(@RequestBody Coat coat) throws Exception{
         try {
             Clothing clothing=coat.getClothing();
             clothingServiceImpl.saveOrUpdate(clothing);
             Integer clothingId=clothing.getId();
             coat.setClothingId(clothingId);
-            return coatServiceImpl.saveOrUpdate(coat);
+            coatServiceImpl.saveOrUpdate(coat);
+            return coat;
         }catch (Exception ex){
             ex.printStackTrace();
             throw  new Exception(ex);

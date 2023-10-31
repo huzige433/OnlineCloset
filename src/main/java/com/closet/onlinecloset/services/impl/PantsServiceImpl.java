@@ -1,5 +1,6 @@
 package com.closet.onlinecloset.services.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.closet.onlinecloset.dao.CoatDao;
 import com.closet.onlinecloset.dao.PantsDao;
@@ -21,5 +22,9 @@ public class PantsServiceImpl extends ServiceImpl<PantsDao, Pants> implements IP
     @Override
     public List<Pants> selectPantsWithClothing(Integer season,Integer userid) {
         return pantsDao.selectPantsWithClothing(season,userid);
+    }
+
+    public <T>List<Pants> selectPantsWithClothing(QueryWrapper<T> wrapper) {
+        return pantsDao.selectPantsWithClothingbyWrapper(wrapper);
     }
 }

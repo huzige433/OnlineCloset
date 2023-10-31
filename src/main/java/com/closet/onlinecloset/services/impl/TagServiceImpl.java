@@ -22,8 +22,13 @@ public class TagServiceImpl extends ServiceImpl<TagDao, Tag> implements ITagServ
     public List<Clothing> getclothingListByTagId(Integer tagid){
         return tagDao.getclothingListByTagId(tagid);
     }
+
     public Boolean saveclothingtotag(Integer clothingid,Integer tagid){
         return tagDao.saveclothingtotag(clothingid,tagid);
+    }
+
+    public Boolean deleteclothingtotag(Integer clothingid,Integer tagid){
+        return tagDao.deleteclothingtotag(clothingid,tagid);
     }
 
 

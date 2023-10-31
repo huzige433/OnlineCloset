@@ -4,10 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.closet.onlinecloset.doamin.Clothing;
 import com.closet.onlinecloset.doamin.Tag;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -22,4 +19,7 @@ public interface TagDao extends BaseMapper<Tag> {
 
     @Insert("insert into tag_clothing(clothingid,tagid) values(#{clothingid},#{tagid})")
     Boolean saveclothingtotag(Integer clothingid,Integer tagid);
+
+    @Delete("delete from tag_clothing where clothingid=#{clothingid} and tagid=#{tagid}")
+    Boolean deleteclothingtotag(Integer clothingid,Integer tagid);
 }

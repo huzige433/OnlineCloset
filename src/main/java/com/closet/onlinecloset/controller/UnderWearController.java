@@ -32,12 +32,13 @@ public class UnderWearController {
     }
 
     @PostMapping("/add")
-    public Boolean add(@RequestBody UnderWear underWear){
+    public UnderWear add(@RequestBody UnderWear underWear){
         Clothing clothing=underWear.getClothing();
         clothingServiceImpl.saveOrUpdate(clothing);
         Integer clothingId=clothing.getId();
         underWear.setClothingId(clothingId);
-        return underWearServiceImpl.saveOrUpdate(underWear);
+        underWearServiceImpl.saveOrUpdate(underWear);
+        return underWear;
 
     }
 

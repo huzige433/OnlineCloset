@@ -35,12 +35,13 @@ public class ShoeController {
     }
 
     @PostMapping("/add")
-    public Boolean add(@RequestBody Shoe shoe){
+    public Shoe add(@RequestBody Shoe shoe){
         Clothing clothing=shoe.getClothing();
         clothingServiceImpl.saveOrUpdate(clothing);
         Integer clothingId=clothing.getId();
         shoe.setClothingId(clothingId);
-        return shoeServiceImpl.saveOrUpdate(shoe);
+        shoeServiceImpl.saveOrUpdate(shoe);
+        return shoe;
 
     }
 
