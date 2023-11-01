@@ -13,6 +13,6 @@ public class MyWebAppConfigurer implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //外部访问路径映射到本地磁盘路径
         registry.addResourceHandler("/upload/**")
-                .addResourceLocations("file:"+System.getProperty("user.dir")+"/"+"images/");
+                .addResourceLocations("file:images/");
     }
 }

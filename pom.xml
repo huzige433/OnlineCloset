@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.closet</groupId>
     <artifactId>OnlineCloset</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>OnlineCloset</name>
     <description>OnlineCloset</description>
     <properties>

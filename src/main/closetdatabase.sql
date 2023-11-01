@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 31/10/2023 15:32:17
+ Date: 01/11/2023 11:59:36
 */
 
 SET NAMES utf8mb4;
@@ -31,21 +31,23 @@ CREATE TABLE `clothing`  (
   `price` decimal(10, 2) NULL DEFAULT NULL COMMENT '价格',
   `buytime` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '购买时间',
   `season` int(1) NULL DEFAULT NULL COMMENT '夏0东1春秋2',
-  `type` int(1) NOT NULL COMMENT '元属性type,0衣服1裤子2内衣3鞋子-1丢弃',
+  `type` int(1) NOT NULL COMMENT '元属性type,0衣服1裤子2内衣3鞋子',
   `userid` int(11) NULL DEFAULT NULL COMMENT '归属',
+  `isactive` int(1) NULL DEFAULT NULL COMMENT '-1丢弃',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 122 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of clothing
 -- ----------------------------
-INSERT INTO `clothing` VALUES (80, '衣服', '\"总结：1.正肩款短袖肩宽42.5-45，胸围49-51（98-102）。优衣库170M\n2.宽松款短袖最大胸围54，肩宽53\n3.买优衣库衣服考虑170M或175L，裤子考虑165/72A\n4.感觉衣长68是极限（中长款羽绒服除外）\"\n', 'https://s2.loli.net/2023/10/18/hRu5mpyZdXE2i61.jpg', '[\"https://s2.loli.net/2023/10/18/hRu5mpyZdXE2i61.jpg\"]', '170/92A(M)', 65.14, '2023-10-26 14:32:58', 0, 0, 1);
-INSERT INTO `clothing` VALUES (81, '灰色短袖', '', 'https://s2.loli.net/2023/10/18/L73pHFTAIEN21bw.jpg', '[\"https://s2.loli.net/2023/10/18/L73pHFTAIEN21bw.jpg\"]', '170/92A（M）', 28.86, '2023-10-26 13:44:07', 0, 0, 1);
-INSERT INTO `clothing` VALUES (82, '防晒衫', '', 'https://s2.loli.net/2023/10/18/iY4NxP7BgGVOAuq.png', '[\"https://s2.loli.net/2023/10/18/iY4NxP7BgGVOAuq.png\"]', '170/92A（M', 106.00, '2023-10-26 13:44:08', 0, 0, 1);
-INSERT INTO `clothing` VALUES (83, '格子衬衫', '', 'https://s2.loli.net/2023/10/18/dQUlr24KFy8PSJo.jpg', '[\"https://s2.loli.net/2023/10/18/dQUlr24KFy8PSJo.jpg\"]', '170/92A（M）', 149.00, '2023-10-26 13:44:09', 0, 0, 1);
-INSERT INTO `clothing` VALUES (85, '裤子', '', 'https://s2.loli.net/2023/10/23/IYrmbFifS1svKWp.jpg', '[\"https://s2.loli.net/2023/10/23/IYrmbFifS1svKWp.jpg\"]', '165/72A', 79.99, '2023-10-26 13:44:09', 0, 1, 1);
-INSERT INTO `clothing` VALUES (89, '内衣1', '', 'https://s2.loli.net/2023/10/24/RbQMtgN8J2H3c57.jpg', '[\"https://s2.loli.net/2023/10/24/RbQMtgN8J2H3c57.jpg\"]', 'L（170/95）', 86.83, '2023-10-26 00:00:00', 1, 2, 1);
-INSERT INTO `clothing` VALUES (90, '鞋子', '合适', 'https://s2.loli.net/2023/10/24/yS6L8sGfOeJbFcW.png', '[\"https://s2.loli.net/2023/10/24/yS6L8sGfOeJbFcW.png\"]', '41（比运动鞋大一码）', 159.49, '2023-10-26 13:44:10', 0, 3, 1);
+INSERT INTO `clothing` VALUES (80, '衣服', '\"总结：1.正肩款短袖肩宽42.5-45，胸围49-51（98-102）。优衣库170M\n2.宽松款短袖最大胸围54，肩宽53\n3.买优衣库衣服考虑170M或175L，裤子考虑165/72A\n4.感觉衣长68是极限（中长款羽绒服除外）\"\n', 'https://s2.loli.net/2023/10/18/hRu5mpyZdXE2i61.jpg', '[\"https://s2.loli.net/2023/10/18/hRu5mpyZdXE2i61.jpg\"]', '170/92A(M)', 65.14, '2023-11-01 11:05:07', 0, 0, 1, 1);
+INSERT INTO `clothing` VALUES (81, '灰色短袖', '', 'https://s2.loli.net/2023/10/18/L73pHFTAIEN21bw.jpg', '[\"https://s2.loli.net/2023/10/18/L73pHFTAIEN21bw.jpg\"]', '170/92A（M）', 28.86, '2023-11-01 11:05:07', 0, 0, 1, 1);
+INSERT INTO `clothing` VALUES (82, '防晒衫', '', 'https://s2.loli.net/2023/10/18/iY4NxP7BgGVOAuq.png', '[\"https://s2.loli.net/2023/10/18/iY4NxP7BgGVOAuq.png\"]', '170/92A（M', 106.00, '2023-11-01 11:05:08', 0, 0, 1, 1);
+INSERT INTO `clothing` VALUES (83, '格子衬衫', '', 'https://s2.loli.net/2023/10/18/dQUlr24KFy8PSJo.jpg', '[\"https://s2.loli.net/2023/10/18/dQUlr24KFy8PSJo.jpg\"]', '170/92A（M）', 149.00, '2023-11-01 11:05:09', 0, 0, 1, 1);
+INSERT INTO `clothing` VALUES (85, '裤子', '', 'https://s2.loli.net/2023/10/23/IYrmbFifS1svKWp.jpg', '[\"https://s2.loli.net/2023/10/23/IYrmbFifS1svKWp.jpg\"]', '165/72A', 79.99, '2023-11-01 11:05:09', 0, 1, 1, 1);
+INSERT INTO `clothing` VALUES (89, '内衣1', '', 'https://s2.loli.net/2023/10/24/RbQMtgN8J2H3c57.jpg', '[\"https://s2.loli.net/2023/10/24/RbQMtgN8J2H3c57.jpg\"]', 'L（170/95）', 86.83, '2023-11-01 11:05:10', 1, 2, 1, 1);
+INSERT INTO `clothing` VALUES (90, '鞋子', '合适', 'https://s2.loli.net/2023/10/24/yS6L8sGfOeJbFcW.png', '[\"https://s2.loli.net/2023/10/24/yS6L8sGfOeJbFcW.png\"]', '41（比运动鞋大一码）', 159.49, '2023-11-01 11:05:11', 0, 3, 1, 1);
+INSERT INTO `clothing` VALUES (131, '测试裤子', '', '/upload/a23e9d91-5ad5-4044-896a-4910c9489d0b.png', '[\"/upload/a23e9d91-5ad5-4044-896a-4910c9489d0b.png\"]', '', 0.00, NULL, 0, 1, 1, 1);
 
 -- ----------------------------
 -- Table structure for coat
@@ -66,7 +68,7 @@ CREATE TABLE `coat`  (
 -- ----------------------------
 INSERT INTO `coat` VALUES (36, 80, '67', '42.5', '49.5(99)', '21');
 INSERT INTO `coat` VALUES (37, 81, '69', '44', '51（102）', '19.5');
-INSERT INTO `coat` VALUES (38, 82, '69', '', '54（108）', '83.5（连肩）');
+INSERT INTO `coat` VALUES (38, 82, '69', '', '54（108）', '83.5(连肩)');
 INSERT INTO `coat` VALUES (39, 83, '74（后肩）', '46.5', '56', '83（连肩）');
 
 -- ----------------------------
@@ -84,12 +86,13 @@ CREATE TABLE `pants`  (
   `inseam_length` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '裤内裆长',
   `pants_opening_width` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '裤口宽',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of pants
 -- ----------------------------
 INSERT INTO `pants` VALUES (1, 85, '1', '97', '92', '', '32', '73', '');
+INSERT INTO `pants` VALUES (7, 131, '', '', '', '', '', '', '');
 
 -- ----------------------------
 -- Table structure for shoe
@@ -105,7 +108,6 @@ CREATE TABLE `shoe`  (
 -- Records of shoe
 -- ----------------------------
 INSERT INTO `shoe` VALUES (1, 90);
-INSERT INTO `shoe` VALUES (2, 101);
 
 -- ----------------------------
 -- Table structure for tag
@@ -125,8 +127,8 @@ INSERT INTO `tag` VALUES (1, '衬衫', 0);
 INSERT INTO `tag` VALUES (2, '长裤', 1);
 INSERT INTO `tag` VALUES (4, '短袖', 0);
 INSERT INTO `tag` VALUES (107, '内衣', 2);
-INSERT INTO `tag` VALUES (108, '长筒靴', 3);
 INSERT INTO `tag` VALUES (109, '长袖', 0);
+INSERT INTO `tag` VALUES (113, '测试', 1);
 
 -- ----------------------------
 -- Table structure for tag_clothing
@@ -150,6 +152,8 @@ INSERT INTO `tag_clothing` VALUES (46, 120, 104);
 INSERT INTO `tag_clothing` VALUES (50, 89, 107);
 INSERT INTO `tag_clothing` VALUES (51, 90, 108);
 INSERT INTO `tag_clothing` VALUES (52, 82, 109);
+INSERT INTO `tag_clothing` VALUES (53, 90, 111);
+INSERT INTO `tag_clothing` VALUES (55, 131, 113);
 
 -- ----------------------------
 -- Table structure for underwear
