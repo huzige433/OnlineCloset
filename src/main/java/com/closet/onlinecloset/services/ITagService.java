@@ -12,4 +12,5 @@ public interface ITagService extends IService<Tag> {
     List<Clothing> getclothingListByTagId(Integer tagid);
     Boolean saveclothingtotag(Integer clothingid,Integer tagid);
     Boolean deleteclothingtotag(Integer clothingid,Integer tagid);
+    Boolean deleteclothingtotag(Integer tagid);
 }

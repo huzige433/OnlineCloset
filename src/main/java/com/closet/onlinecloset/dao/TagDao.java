@@ -22,4 +22,7 @@ public interface TagDao extends BaseMapper<Tag> {
 
     @Delete("delete from tag_clothing where clothingid=#{clothingid} and tagid=#{tagid}")
     Boolean deleteclothingtotag(Integer clothingid,Integer tagid);
+
+    @Delete("delete from tag_clothing where tagid=#{tagid}")
+    Boolean deleteclothingtotagBytagid(Integer tagid);
 }

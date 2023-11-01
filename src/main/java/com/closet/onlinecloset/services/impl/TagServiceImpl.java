@@ -30,6 +30,9 @@ public class TagServiceImpl extends ServiceImpl<TagDao, Tag> implements ITagServ
     public Boolean deleteclothingtotag(Integer clothingid,Integer tagid){
         return tagDao.deleteclothingtotag(clothingid,tagid);
     }
+    public Boolean deleteclothingtotag(Integer tagid){
+        return tagDao.deleteclothingtotagBytagid(tagid);
+    }
 
 
 }

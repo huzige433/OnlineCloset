@@ -18,26 +18,32 @@ public class ClothingServiceImpl extends ServiceImpl<ClothingDao, Clothing> impl
 
     public List<?> getToSeason(Integer season,Integer userid){
         QueryWrapper<Clothing> wrapper=new QueryWrapper<>();
-        wrapper.eq("season",season).eq("userid",userid);
+        wrapper.eq("season",season).eq("userid",userid).ne("isActive",-1);
         List<?> clothing=clothingMapper.selectList(wrapper);
         return clothing;
     }
     public List<?> getToSeason(Integer userid){
         QueryWrapper<Clothing> wrapper=new QueryWrapper<>();
-        wrapper.eq("userid",userid);
+        wrapper.eq("userid",userid).ne("isActive",-1);
         List<?> clothing=clothingMapper.selectList(wrapper);
         return clothing;
     }
     public List<?> getToType(Integer type,Integer userid){
         QueryWrapper<Clothing> wrapper=new QueryWrapper<>();
-        wrapper.eq("type",type).eq("userid",userid);
+        wrapper.eq("type",type).eq("userid",userid).ne("isActive",-1);
         List<?> clothing=clothingMapper.selectList(wrapper);
         return clothing;
     }
 
     public Integer getCountToType(Integer type,Integer userid){
         QueryWrapper<Clothing> wrapper=new QueryWrapper<>();
-        wrapper.eq("type",type).eq("userid",userid);
+        wrapper.eq("type",type).eq("userid",userid).ne("isActive",-1);
+        Integer count=clothingMapper.selectCount(wrapper);
+        return count;
+    }
+    public Integer getCountToIsActive(Integer isactive,Integer userid){
+        QueryWrapper<Clothing> wrapper=new QueryWrapper<>();
+        wrapper.eq("isActive",isactive).eq("userid",userid);
         Integer count=clothingMapper.selectCount(wrapper);
         return count;
     }

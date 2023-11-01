@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.Value;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -26,8 +28,9 @@ public class Clothing implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date buytime;//购买时间
     private Integer season;//春0夏1秋冬2
-    private Integer type;//元属性type,0衣服1裤子2内衣3鞋子-1丢弃
+    private Integer type;//元属性type,0衣服1裤子2内衣3鞋子
     private Integer userid;//用户id
+    private Integer isactive;//-1丢弃
 
 
 

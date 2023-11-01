@@ -37,6 +37,7 @@ public class ShoeController {
     @PostMapping("/add")
     public Shoe add(@RequestBody Shoe shoe){
         Clothing clothing=shoe.getClothing();
+        clothing.setIsactive(1);
         clothingServiceImpl.saveOrUpdate(clothing);
         Integer clothingId=clothing.getId();
         shoe.setClothingId(clothingId);

@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper
 public interface ShoeDao extends BaseMapper<Shoe> {
 
-    @Select("SELECT c.*, cl.* FROM shoe c JOIN clothing cl ON c.clothing_id = cl.id AND cl.type>-1 WHERE c.id = #{id}")
+    @Select("SELECT c.*, cl.* FROM shoe c JOIN clothing cl ON c.clothing_id = cl.id AND cl.isactive>-1 WHERE c.id = #{id}")
     @Results({
             @Result(property = "id", column = "id"),
             @Result(property = "clothing", column = "clothing_id", one = @One(select = "com.closet.onlinecloset.dao.ClothingDao.selectById"))
@@ -22,7 +22,7 @@ public interface ShoeDao extends BaseMapper<Shoe> {
     Shoe selectById(Integer id);
 
     @Select("<script>" +
-            "SELECT c.*, cl.* FROM shoe c JOIN clothing cl ON c.clothing_id = cl.id AND cl.type>-1 AND cl.userid=#{userid}" +
+            "SELECT c.*, cl.* FROM shoe c JOIN clothing cl ON c.clothing_id = cl.id AND cl.isactive>-1 AND cl.userid=#{userid}" +
             "<if test='season != null'> WHERE cl.season = #{season}</if>" +
             "</script>")
     @Results({
@@ -31,7 +31,7 @@ public interface ShoeDao extends BaseMapper<Shoe> {
     })
     List<Shoe> selectShoeWithClothing(Integer season,Integer userid);
 
-    @Select("SELECT c.*, cl.* FROM shoe c JOIN clothing cl ON c.clothing_id = cl.id AND cl.type>-1 ${ew.customSqlSegment}")
+    @Select("SELECT c.*, cl.* FROM shoe c JOIN clothing cl ON c.clothing_id = cl.id AND cl.isactive>-1 ${ew.customSqlSegment}")
     @Results({
             @Result(property = "id", column = "id"),
             @Result(property = "clothing", column = "clothing_id", one = @One(select = "com.closet.onlinecloset.dao.ClothingDao.selectById"))

@@ -68,6 +68,20 @@ public class TagController {
         }
     }
 
+    @GetMapping("/remove/{tagid}")
+    public Boolean remove(@PathVariable Integer tagid){
+        try {
+            if(tagService.deleteclothingtotag(tagid)){
+                return tagService.removeById(tagid);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return false;
+
+    }
+
     @PostMapping("/savetag_clothing")
     public Boolean savetag_clothing(@RequestBody JSONObject requestData){
        Integer clothingid= requestData.getInt("clothingid");

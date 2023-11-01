@@ -39,6 +39,7 @@ public class CoatController {
     public Coat add(@RequestBody Coat coat) throws Exception{
         try {
             Clothing clothing=coat.getClothing();
+            clothing.setIsactive(1);
             clothingServiceImpl.saveOrUpdate(clothing);
             Integer clothingId=clothing.getId();
             coat.setClothingId(clothingId);

@@ -34,6 +34,7 @@ public class UnderWearController {
     @PostMapping("/add")
     public UnderWear add(@RequestBody UnderWear underWear){
         Clothing clothing=underWear.getClothing();
+        clothing.setIsactive(1);
         clothingServiceImpl.saveOrUpdate(clothing);
         Integer clothingId=clothing.getId();
         underWear.setClothingId(clothingId);
