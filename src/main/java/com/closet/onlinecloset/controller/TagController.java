@@ -76,7 +76,7 @@ public class TagController {
             }
         }catch (Exception ex){
             ex.printStackTrace();
-            return false;
+            return tagService.removeById(tagid);
         }
         return false;
 
