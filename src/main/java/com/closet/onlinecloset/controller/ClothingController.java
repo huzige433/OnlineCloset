@@ -2,10 +2,9 @@ package com.closet.onlinecloset.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.closet.onlinecloset.doamin.Clothing;
-import com.closet.onlinecloset.doamin.ClothingSort;
-import com.closet.onlinecloset.services.impl.ClothingServiceImpl;
-import com.closet.onlinecloset.services.impl.ClothingSortServiceImpl;
+import com.closet.onlinecloset.doamin.*;
+import com.closet.onlinecloset.services.impl.*;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,11 +22,18 @@ public class ClothingController {
 
     private final ClothingServiceImpl clothingServiceImpl;
     private final ClothingSortServiceImpl clothingSortService;
+    final private CoatServiceImpl coatService;
+    final private PantsServiceImpl pantsService;
+    final private UnderWearServiceImpl underWearService;
+    final private ShoeServiceImpl shoeService;
 
-
-    public ClothingController(ClothingServiceImpl clothingServiceImpl, ClothingSortServiceImpl clothingSortService) {
+    public ClothingController(ClothingServiceImpl clothingServiceImpl, ClothingSortServiceImpl clothingSortService, CoatServiceImpl coatService, PantsServiceImpl pantsService, UnderWearServiceImpl underWearService, ShoeServiceImpl shoeService) {
         this.clothingServiceImpl = clothingServiceImpl;
         this.clothingSortService = clothingSortService;
+        this.coatService = coatService;
+        this.pantsService = pantsService;
+        this.underWearService = underWearService;
+        this.shoeService = shoeService;
     }
 
 
@@ -52,16 +58,45 @@ public class ClothingController {
     }
 
     @GetMapping("/deleted/{id}")
-    public Boolean deleteCoat(@PathVariable Integer id){
+    public Boolean delete(@PathVariable Integer id){
         Clothing clothing=clothingServiceImpl.getById(id);
         clothing.setIsactive(-1);
         return clothingServiceImpl.saveOrUpdate(clothing);
     }
     @GetMapping("/redeleted/{id}")
-    public Boolean redeleteCoat(@PathVariable Integer id){
+    public Boolean redelete(@PathVariable Integer id){
         Clothing clothing=clothingServiceImpl.getById(id);
         clothing.setIsactive(1);
         return clothingServiceImpl.saveOrUpdate(clothing);
+    }
+    @Transactional(rollbackFor = Exception.class)
+    @GetMapping("/remove/{id}")
+    public Boolean remove(@PathVariable Integer id) throws Exception{
+        try {
+            Clothing clothing=clothingServiceImpl.getById(id);
+            Integer type=clothing.getType();
+            if(type==0){
+                QueryWrapper<Coat> queryWrapper=new QueryWrapper<>();
+                queryWrapper.eq("clothing_id",id);
+                coatService.remove(queryWrapper);
+            }else if(type==1){
+                QueryWrapper<Pants> queryWrapper=new QueryWrapper<>();
+                queryWrapper.eq("clothing_id",id);
+                pantsService.remove(queryWrapper);
+            }else if(type==2){
+                QueryWrapper<UnderWear> queryWrapper=new QueryWrapper<>();
+                queryWrapper.eq("clothing_id",id);
+                underWearService.remove(queryWrapper);
+            }else if(type==3){
+                QueryWrapper<Shoe> queryWrapper=new QueryWrapper<>();
+                queryWrapper.eq("clothing_id",id);
+                shoeService.remove(queryWrapper);
+            }
+            return clothingServiceImpl.removeById(id);
+        }catch (Exception ex){
+            throw new Exception(ex);
+        }
+
     }
 
     @GetMapping("/count")
