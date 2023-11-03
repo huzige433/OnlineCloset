@@ -3,10 +3,9 @@ package com.closet.onlinecloset.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.closet.onlinecloset.doamin.Clothing;
-import com.closet.onlinecloset.doamin.Coat;
-import com.closet.onlinecloset.doamin.Pants;
+import com.closet.onlinecloset.doamin.ClothingSort;
 import com.closet.onlinecloset.services.impl.ClothingServiceImpl;
-import com.closet.onlinecloset.services.impl.PantsServiceImpl;
+import com.closet.onlinecloset.services.impl.ClothingSortServiceImpl;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,10 +22,12 @@ import java.util.UUID;
 public class ClothingController {
 
     private final ClothingServiceImpl clothingServiceImpl;
+    private final ClothingSortServiceImpl clothingSortService;
 
 
-    public ClothingController( ClothingServiceImpl clothingServiceImpl) {
+    public ClothingController(ClothingServiceImpl clothingServiceImpl, ClothingSortServiceImpl clothingSortService) {
         this.clothingServiceImpl = clothingServiceImpl;
+        this.clothingSortService = clothingSortService;
     }
 
 
@@ -106,5 +107,18 @@ public class ClothingController {
         String filename = "/upload/" + fileName;//本地目录和生成的文件名拼接，这一段存入数据库
         return filename;
     }
+
+    @GetMapping("/sort/{type}")
+    public ClothingSort getsort(@PathVariable Integer type,@RequestHeader("userid") Integer userid){
+        QueryWrapper<ClothingSort> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("userid",userid).eq("type",type);
+        return clothingSortService.getOne(queryWrapper);
+    }
+
+    @PostMapping("/sort")
+    public Boolean savesort(@RequestBody ClothingSort clothingSort){
+        return clothingSortService.saveOrUpdate(clothingSort);
+    }
+
 
 }
