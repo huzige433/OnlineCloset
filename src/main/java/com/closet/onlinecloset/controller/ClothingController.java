@@ -52,7 +52,7 @@ public class ClothingController {
     @GetMapping("/recycle")
     public List<?> Recycle(@RequestHeader("userid") Integer userid){
         QueryWrapper<Clothing> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("isActive",-1);
+        queryWrapper.eq("isActive",-1).eq("userid",userid);
         List<?> closets= clothingServiceImpl.list(queryWrapper);
         return closets;
     }
@@ -153,6 +153,14 @@ public class ClothingController {
     @PostMapping("/sort")
     public Boolean savesort(@RequestBody ClothingSort clothingSort){
         return clothingSortService.saveOrUpdate(clothingSort);
+    }
+
+    @GetMapping("getmoneysum")
+    public Map getmoney(@RequestHeader("userid") Integer userid){
+        QueryWrapper<Clothing> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("sum(price) as money ").eq("userid",userid);
+        queryWrapper.ne("isactive",-1);
+        return clothingServiceImpl.getMap(queryWrapper);
     }
 
 

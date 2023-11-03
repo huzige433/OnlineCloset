@@ -71,14 +71,12 @@ public class TagController {
     @GetMapping("/remove/{tagid}")
     public Boolean remove(@PathVariable Integer tagid){
         try {
-            if(tagService.deleteclothingtotag(tagid)){
+                tagService.deleteclothingtotag(tagid);
                 return tagService.removeById(tagid);
-            }
         }catch (Exception ex){
             ex.printStackTrace();
             return tagService.removeById(tagid);
         }
-        return false;
 
     }
 
