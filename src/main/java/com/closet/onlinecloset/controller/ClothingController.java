@@ -4,16 +4,14 @@ package com.closet.onlinecloset.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.closet.onlinecloset.doamin.*;
 import com.closet.onlinecloset.services.impl.*;
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -124,18 +122,33 @@ public class ClothingController {
     @ResponseBody
     public String uploadImages(@RequestParam(value = "file") MultipartFile file) {
 
+        List<String> allowedExtensions = Arrays.asList("jpg", "jpeg", "png", "gif");
+
+
         if (file.isEmpty()) return "文件不存在";
         String fileName = file.getOriginalFilename();  // 文件名
         String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
+        if (!allowedExtensions.contains(suffixName.replace(".","").toLowerCase())) {
+            throw new IllegalArgumentException("不支持的文件类型"); // 抛出异常
+        }
         String filePath = System.getProperty("user.dir")+"/"+"images/"; // 上传后的路径,即本地磁盘
-        System.out.print(System.getProperty("user.dir")+"/"+"images/");
         fileName = UUID.randomUUID() + suffixName; // 新文件名
         File dest = new File(filePath + fileName);
         if (!dest.getParentFile().exists()) {
             dest.getParentFile().mkdirs();
         }
         try {
-            file.transferTo(dest);
+            if(file.getSize()>=1024*512){
+                Thumbnails.of(file.getInputStream())
+                        .size(1024, 768)
+                        .outputQuality(0.4f)
+                        .outputFormat("jpeg")
+                        .toFile(dest);
+            }else {
+                file.transferTo(dest);
+            }
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
