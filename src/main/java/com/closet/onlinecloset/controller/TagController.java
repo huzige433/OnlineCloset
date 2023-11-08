@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-
+/**
+ * 标签控制类
+ */
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/v1/tags")
@@ -35,16 +37,31 @@ public class TagController {
         this.shoeService = shoeService;
     }
 
+    /**
+     * 根据服装id获取对应的tag标签列表
+     * @param clothingid
+     * @return
+     */
     @GetMapping("/gettag/{clothingid}")
     public List<Tag> gettag(@PathVariable Integer clothingid){
         return tagService.getListByClothingId(clothingid);
     }
 
+    /**
+     * 通过标签获取服装列表
+     * @param tagid
+     * @return
+     */
     @GetMapping("/getclothing/{tagid}")
     public List<Clothing> getclothing(@PathVariable Integer tagid){
         return tagService.getclothingListByTagId(tagid);
     }
 
+    /**
+     * 根据服装属性对应服装类型的tag标签可选项
+     * @param type
+     * @return
+     */
     @GetMapping("/gettagoptions/{type}")
     public List<?> gettagoptions(@PathVariable Integer type){
         QueryWrapper<Tag> queryWrapper =new QueryWrapper<>();
@@ -52,6 +69,10 @@ public class TagController {
         return tagService.list(queryWrapper);
     }
 
+    /**
+     * 获取所有标签列
+     * @return
+     */
     @GetMapping("/gettagoptions")
     public List<?> gettagoptions(){
 
@@ -59,6 +80,11 @@ public class TagController {
     }
 
 
+    /**
+     * 保存标签实体
+     * @param tag
+     * @return
+     */
     @PostMapping("/save")
     public Integer save(@RequestBody Tag tag){
         if (tagService.save(tag)){
@@ -68,6 +94,11 @@ public class TagController {
         }
     }
 
+    /**
+     * 删除标签实体
+     * @param tagid
+     * @return
+     */
     @GetMapping("/remove/{tagid}")
     public Boolean remove(@PathVariable Integer tagid){
         try {
@@ -80,6 +111,11 @@ public class TagController {
 
     }
 
+    /**
+     * 保存服装和标签的关系表数据
+     * @param requestData
+     * @return
+     */
     @PostMapping("/savetag_clothing")
     public Boolean savetag_clothing(@RequestBody JSONObject requestData){
        Integer clothingid= requestData.getInt("clothingid");
@@ -87,6 +123,11 @@ public class TagController {
         return tagService.saveclothingtotag(clothingid, tagid);
     }
 
+    /**
+     * 删除服装与标签的关系
+     * @param requestData
+     * @return
+     */
     @PostMapping("deletetag_clothing")
     public Boolean deletetag_clothing(@RequestBody JSONObject requestData){
         Integer clothingid= requestData.getInt("clothingid");
@@ -94,6 +135,13 @@ public class TagController {
         return tagService.deleteclothingtotag(clothingid, tagid);
     }
 
+    /**
+     * 更加标签获取对应的服装实体属性
+     * @param tagid
+     * @param type
+     * @param <T>
+     * @return
+     */
     @GetMapping("getclothingfrontag")
     public <T> List<?> getclothingfromtag(@RequestParam("tagid") Integer tagid,@RequestParam("type") Integer type){
         List<Clothing> clothings=tagService.getclothingListByTagId(tagid);

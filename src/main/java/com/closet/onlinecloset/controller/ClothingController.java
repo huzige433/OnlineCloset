@@ -9,10 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * 服装的控制类,服装类包括全部服装元数据
+ */
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/v1")
@@ -35,18 +39,34 @@ public class ClothingController {
     }
 
 
+    /**
+     * 获取所有服装的基础属性clothing
+     * @param season 递季节值
+     * @param userid 用户id值
+     * @return 列表
+     */
     @GetMapping("/imglist/{season}")
     public List<?> Imglist(@PathVariable Integer season,@RequestHeader("userid") Integer userid){
         List<?> closets= clothingServiceImpl.getToSeason(season,userid);
         return closets;
     }
 
+    /**
+     *不区分季节获取所有衣服参数
+     * @param userid
+     * @return
+     */
     @GetMapping("/imglist")
     public List<?> Imglist(@RequestHeader("userid") Integer userid){
         List<?> closets= clothingServiceImpl.getToSeason(userid);
         return closets;
     }
 
+    /**
+     * 获取状态为丢弃状态的服装
+     * @param userid
+     * @return
+     */
     @GetMapping("/recycle")
     public List<?> Recycle(@RequestHeader("userid") Integer userid){
         QueryWrapper<Clothing> queryWrapper=new QueryWrapper<>();
@@ -55,18 +75,36 @@ public class ClothingController {
         return closets;
     }
 
+    /**
+     * 将服装状态isActive设置为丢弃
+     * @param id
+     * @return
+     */
     @GetMapping("/deleted/{id}")
     public Boolean delete(@PathVariable Integer id){
         Clothing clothing=clothingServiceImpl.getById(id);
         clothing.setIsactive(-1);
         return clothingServiceImpl.saveOrUpdate(clothing);
     }
+
+    /**
+     * 回收丢弃衣服
+     * @param id
+     * @return
+     */
     @GetMapping("/redeleted/{id}")
     public Boolean redelete(@PathVariable Integer id){
         Clothing clothing=clothingServiceImpl.getById(id);
         clothing.setIsactive(1);
         return clothingServiceImpl.saveOrUpdate(clothing);
     }
+
+    /**
+     * 删除已经丢弃的服装,删除基础属性与其父表
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @Transactional(rollbackFor = Exception.class)
     @GetMapping("/remove/{id}")
     public Boolean remove(@PathVariable Integer id) throws Exception{
@@ -97,19 +135,36 @@ public class ClothingController {
 
     }
 
+    /**
+     * 获取所有服装的数量
+     * @param userid
+     * @return
+     */
     @GetMapping("/count")
-    public Map<String, Integer> clothingCount(@RequestHeader("userid") Integer userid){
-        Integer coatcount=clothingServiceImpl.getCountToType(0,userid);
-        Integer pantscount=clothingServiceImpl.getCountToType(1,userid);
-        Integer underwearcount=clothingServiceImpl.getCountToType(2,userid);
-        Integer shoecount=clothingServiceImpl.getCountToType(3,userid);
+    public Map<String, Long> clothingCount(@RequestHeader("userid") Integer userid){
+        QueryWrapper<Clothing> queryWrapper=new QueryWrapper<>();
+        queryWrapper.select("type","count(1) as count")
+                .groupBy("type");
+        List<Map<String, Object>> result = clothingServiceImpl.listMaps(queryWrapper);
+        Map<String, Long> countMap = new HashMap<>();
+        for(Map<String,Object> map : result){
+            switch ((Integer)map.get("type")) {
+                case 0:
+                    countMap.put("coatcount", (Long) map.get("count"));
+                    break;
+                case 1:
+                    countMap.put("pantscount", (Long) map.get("count"));
+                    break;
+                case 2:
+                    countMap.put("underwearcount", (Long) map.get("count"));
+                    break;
+                case 3:
+                    countMap.put("shoecount", (Long) map.get("count"));
+                    break;
+            }
+            }
         Integer recycle=clothingServiceImpl.getCountToIsActive(-1,userid);
-        Map<String, Integer> countMap = new HashMap<>();
-        countMap.put("coatcount", coatcount);
-        countMap.put("pantscount", pantscount);
-        countMap.put("underwearcount", underwearcount);
-        countMap.put("shoecount", shoecount);
-        countMap.put("recycle", recycle);
+        countMap.put("recycle", Long.valueOf(recycle));
         return countMap;
     }
 
@@ -156,6 +211,12 @@ public class ClothingController {
         return filename;
     }
 
+    /**
+     * 根据服装种类返回排序列
+     * @param type
+     * @param userid
+     * @return
+     */
     @GetMapping("/sort/{type}")
     public ClothingSort getsort(@PathVariable Integer type,@RequestHeader("userid") Integer userid){
         QueryWrapper<ClothingSort> queryWrapper=new QueryWrapper<>();
@@ -163,11 +224,21 @@ public class ClothingController {
         return clothingSortService.getOne(queryWrapper);
     }
 
+    /**
+     * 保存排序列数据
+     * @param clothingSort
+     * @return
+     */
     @PostMapping("/sort")
     public Boolean savesort(@RequestBody ClothingSort clothingSort){
         return clothingSortService.saveOrUpdate(clothingSort);
     }
 
+    /**
+     * 总的消费数据,不包括丢弃的
+     * @param userid
+     * @return
+     */
     @GetMapping("getmoneysum")
     public Map getmoney(@RequestHeader("userid") Integer userid){
         QueryWrapper<Clothing> queryWrapper = new QueryWrapper<>();

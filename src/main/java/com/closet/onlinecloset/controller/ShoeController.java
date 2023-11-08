@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * 鞋子类 type3
+ */
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/v1/shoe")
@@ -46,7 +49,13 @@ public class ShoeController {
 
     }
 
-
+    /**
+     * 弃用
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @Deprecated
     @GetMapping("/deleted/{id}")
     @Transactional(rollbackFor = Exception.class)
     public Boolean deleteCoat(@PathVariable Integer id) throws Exception{

@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 内衣控制类 type为2
+ */
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/v1/underwear")

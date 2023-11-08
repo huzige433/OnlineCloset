@@ -9,10 +9,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.Console;
+
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * 上装控制类 type0
+ */
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/v1/coat")
@@ -27,13 +30,23 @@ public class CoatController {
         this.clothingServiceImpl = clothingServiceImpl;
     }
 
-
+    /**
+     * 根据用户返回对应的上装列表
+     * @param userid
+     * @return
+     */
     @GetMapping("/list")
     public List<?> list(@RequestHeader("userid") Integer userid){
 
         return coatServiceImpl.selectCoatWithClothing(null,userid);
     }
 
+    /**
+     * 添加上装实体,先添加元实体,再添加coat实体
+     * @param coat
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/add")
     @Transactional(rollbackFor = Exception.class)
     public Coat add(@RequestBody Coat coat) throws Exception{
@@ -53,6 +66,12 @@ public class CoatController {
 
     }
 
+    /**
+     * 未使用
+     * @param coatJson
+     * @return
+     */
+    @Deprecated
     @PostMapping("/formadd")
     public Boolean add(@RequestParam("coat") String coatJson) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -70,15 +89,20 @@ public class CoatController {
     }
 
 
-
-
+    /**
+     * 弃用
+     * @param id
+     * @return
+     */
+    @Deprecated
     @GetMapping("/deleted/{id}")
     public Boolean deleteCoat(@PathVariable Integer id){
         Coat coat=coatServiceImpl.getById(id);
         Clothing clothing=coat.getClothing();
-        clothing.setType(4);
+        clothing.setType(-1);
         return clothingServiceImpl.saveOrUpdate(clothing);
     }
+
 
     @GetMapping("/page/{id}")
     public Coat ViewCoat(@PathVariable Integer id){
