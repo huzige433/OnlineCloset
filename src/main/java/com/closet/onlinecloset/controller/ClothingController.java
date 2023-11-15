@@ -144,6 +144,7 @@ public class ClothingController {
     public Map<String, Long> clothingCount(@RequestHeader("userid") Integer userid){
         QueryWrapper<Clothing> queryWrapper=new QueryWrapper<>();
         queryWrapper.select("type","count(1) as count")
+                .eq("userid",userid)
                 .groupBy("type");
         List<Map<String, Object>> result = clothingServiceImpl.listMaps(queryWrapper);
         Map<String, Long> countMap = new HashMap<>();
@@ -247,5 +248,9 @@ public class ClothingController {
         return clothingServiceImpl.getMap(queryWrapper);
     }
 
+    @GetMapping("test")
+    public List<Map<String, Object>> test(){
+        return clothingServiceImpl.getClothingJoinOther();
+    }
 
 }

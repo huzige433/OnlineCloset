@@ -24,31 +24,7 @@ class OnlineClosetApplicationTests {
 
     @Test
     void contextLoads() {
-        QueryWrapper<Clothing> queryWrapper=new QueryWrapper<>();
-        queryWrapper.select("type","count(1) as count")
-                .groupBy("type");
-        List<Map<String, Object>> result = clothingService.listMaps(queryWrapper);
-        Map<String, Long> countMap = new HashMap<>();
-        for(Map<String,Object> map : result){
-            switch ((Integer)map.get("type")) {
-                case 0:
-                    countMap.put("coatcount", (Long) map.get("count"));
-                    break;
-                case 1:
-                    countMap.put("pantscount", (Long) map.get("count"));
-                    break;
-                case 2:
-                    countMap.put("underwearcount", (Long) map.get("count"));
-                    break;
-                case 3:
-                    countMap.put("shoecount", (Long) map.get("count"));
-                    break;
-                case -1:
-                    countMap.put("recycle", (Long) map.get("count"));
-                    break;
-            }
-        }
-        System.out.print(countMap);
+        clothingService.getClothingJoinOther();
 
 
     }

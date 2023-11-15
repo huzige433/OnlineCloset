@@ -14,8 +14,8 @@ public interface TagDao extends BaseMapper<Tag> {
     @Select("select * from tag left join tag_clothing on tag.id=tag_clothing.tagid where tag_clothing.clothingid=#{clothingid}")
     List<Tag> getListByClothingId(Integer clothingid);
 
-    @Select("select * from clothing left join tag_clothing on clothing.id=tag_clothing.clothingid where tag_clothing.tagid=#{tagid}")
-    List<Clothing> getclothingListByTagId(Integer tagid);
+    @Select("select * from clothing left join tag_clothing on clothing.id=tag_clothing.clothingid and clothing.userid=#{userid} where tag_clothing.tagid=#{tagid}")
+    List<Clothing> getclothingListByTagId(Integer tagid,Integer userid);
 
     @Insert("insert into tag_clothing(clothingid,tagid) values(#{clothingid},#{tagid})")
     Boolean saveclothingtotag(Integer clothingid,Integer tagid);

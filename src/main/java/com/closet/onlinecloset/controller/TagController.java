@@ -53,8 +53,8 @@ public class TagController {
      * @return
      */
     @GetMapping("/getclothing/{tagid}")
-    public List<Clothing> getclothing(@PathVariable Integer tagid){
-        return tagService.getclothingListByTagId(tagid);
+    public List<Clothing> getclothing(@PathVariable Integer tagid,@RequestHeader("userid") Integer userid){
+        return tagService.getclothingListByTagId(tagid,userid);
     }
 
     /**
@@ -143,8 +143,8 @@ public class TagController {
      * @return
      */
     @GetMapping("getclothingfrontag")
-    public <T> List<?> getclothingfromtag(@RequestParam("tagid") Integer tagid,@RequestParam("type") Integer type){
-        List<Clothing> clothings=tagService.getclothingListByTagId(tagid);
+    public <T> List<?> getclothingfromtag(@RequestParam("tagid") Integer tagid,@RequestParam("type") Integer type,@RequestHeader("userid") Integer userid){
+        List<Clothing> clothings=tagService.getclothingListByTagId(tagid,userid);
         if(clothings.size()==0){return null;}
         QueryWrapper<T> queryWrapper =new QueryWrapper<>();
         clothings.forEach(clothing -> queryWrapper.or().eq("clothing_id",clothing.getId()));

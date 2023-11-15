@@ -19,8 +19,8 @@ public class TagServiceImpl extends ServiceImpl<TagDao, Tag> implements ITagServ
     public List<Tag> getListByClothingId(Integer clothingid) {
         return tagDao.getListByClothingId(clothingid);
     }
-    public List<Clothing> getclothingListByTagId(Integer tagid){
-        return tagDao.getclothingListByTagId(tagid);
+    public List<Clothing> getclothingListByTagId(Integer tagid,Integer userid){
+        return tagDao.getclothingListByTagId(tagid,userid);
     }
 
     public Boolean saveclothingtotag(Integer clothingid,Integer tagid){
